@@ -8,7 +8,7 @@ it can be added to autostart to get new wallpapers
     wally -url <url>
 
 by default, the command fetches a wallpaper to $HOME/Pictures/wally.jpg
-it only downloads if the wallpaper is a day old
+it only downloads if the wallpaper is a day (24h) old
 
 in addition to url, it can be configured to use plugins from different sources
 
