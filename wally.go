@@ -13,7 +13,7 @@ import (
 
 var (
 	url      = flag.String("url", "", "url of the wallpaper")
-	path     = flag.String("path", "Pictures", "dir for wallpaper")
+	path     = flag.String("path", "Pictures", "path for wallpaper")
 	force    = flag.Bool("force", false, "force download")
 	filename = flag.String("filename", "wally.jpg", "filename for wallpaper")
 	plugin   = flag.String("plugin", "bing", "plugin to use")
@@ -21,6 +21,9 @@ var (
 )
 
 func absfilepath() string {
+	if filepath.IsAbs(*path) {
+		return filepath.Join(*path, *filename)
+	}
 	usr, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
@@ -33,21 +36,24 @@ func init() {
 
 	pm := &pluginManager{}
 	pm.register("bing", newBingPlugin())
+	pm.register("natgeo", newNatGeoPlugin())
 
 	if *list {
 		log.Println(pm.list())
 		os.Exit(0)
 	}
 
-	fi, err := os.Stat(absfilepath())
-	if err != nil {
-		log.Fatal(err)
+	if fi, err := os.Stat(absfilepath()); err != nil {
+		if !os.IsNotExist(err) {
+			log.Fatal(err)
+		}
+	} else {
+		recent := fi.ModTime().After(time.Now().Add(-24 * time.Hour))
+		if recent && !*force {
+			os.Exit(0)
+		}
 	}
 
-	recent := fi.ModTime().After(time.Now().Add(-24 * time.Hour))
-	if recent && !*force {
-		os.Exit(0)
-	}
 	if *url != "" {
 		return
 	}
