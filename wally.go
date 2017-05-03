@@ -16,7 +16,7 @@ var (
 	path     = flag.String("path", "Pictures", "path for wallpaper")
 	force    = flag.Bool("force", false, "force download")
 	filename = flag.String("filename", "wally.jpg", "filename for wallpaper")
-	plugin   = flag.String("plugin", "natgeo", "plugin to use")
+	plugin   = flag.String("plugin", "bing", "plugin to use")
 	list     = flag.Bool("list", false, "list plugins and exit")
 )
 
