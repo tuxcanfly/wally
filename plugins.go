@@ -24,7 +24,7 @@ func (p pluginManager) get(name string) (wallyPlugin, error) {
 
 func (p pluginManager) list() []string {
 	var plugins []string
-	for k, _ := range p {
+	for k := range p {
 		plugins = append(plugins, k)
 	}
 	return plugins

@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type BingResult struct {
+type bingResult struct {
 	Images []struct {
 		Startdate     string        `json:"startdate"`
 		Fullstartdate string        `json:"fullstartdate"`
@@ -50,7 +50,7 @@ func (b *bingPlugin) URL() (string, error) {
 	}
 	defer resp.Body.Close()
 
-	bing := new(BingResult)
+	bing := new(bingResult)
 	json.NewDecoder(resp.Body).Decode(&bing)
 	return fmt.Sprintf("%s%s", b.domain, bing.Images[0].URL), nil
 }

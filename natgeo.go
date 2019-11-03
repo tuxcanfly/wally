@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-type NatGeoResult struct {
+type natGeoResult struct {
 	GalleryTitle     string `json:"galleryTitle"`
 	PreviousEndpoint string `json:"previousEndpoint"`
 	Items            []struct {
@@ -69,7 +69,7 @@ func (n *natGeoPlugin) URL() (string, error) {
 	}
 	defer resp.Body.Close()
 
-	natgeo := new(NatGeoResult)
+	natgeo := new(natGeoResult)
 	json.NewDecoder(resp.Body).Decode(&natgeo)
 	if len(natgeo.Items) == 0 {
 		return "", errors.New("no items")
