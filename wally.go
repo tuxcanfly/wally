@@ -37,6 +37,7 @@ func init() {
 	pm := &pluginManager{}
 	pm.register("bing", newBingPlugin())
 	pm.register("natgeo", newNatGeoPlugin())
+	pm.register("reddit", newRedditPlugin())
 
 	if *list {
 		log.Println(pm.list())
